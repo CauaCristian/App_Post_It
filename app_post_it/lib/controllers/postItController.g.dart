@@ -25,26 +25,42 @@ mixin _$Controller on PostItController, Store {
     });
   }
 
+  late final _$addPostItAsyncAction =
+      AsyncAction('PostItController.addPostIt', context: context);
+
+  @override
+  Future<void> addPostIt(
+      String title, String description, String token, int authorId) {
+    return _$addPostItAsyncAction
+        .run(() => super.addPostIt(title, description, token, authorId));
+  }
+
   late final _$getPostsAsyncAction =
       AsyncAction('PostItController.getPosts', context: context);
 
   @override
-  Future getPosts(int authorId) {
+  Future<void> getPosts(int authorId) {
     return _$getPostsAsyncAction.run(() => super.getPosts(authorId));
   }
 
-  late final _$PostItControllerActionController =
-      ActionController(name: 'PostItController', context: context);
+  late final _$updatePostItAsyncAction =
+      AsyncAction('PostItController.updatePostIt', context: context);
 
   @override
-  void addPostIt() {
-    final _$actionInfo = _$PostItControllerActionController.startAction(
-        name: 'PostItController.addPostIt');
-    try {
-      return super.addPostIt();
-    } finally {
-      _$PostItControllerActionController.endAction(_$actionInfo);
-    }
+  Future<void> updatePostIt(String token, String title, String description,
+      int authorId, int postId) {
+    return _$updatePostItAsyncAction.run(
+        () => super.updatePostIt(token, title, description, authorId, postId));
+  }
+
+  late final _$deletePostItAsyncAction =
+      AsyncAction('PostItController.deletePostIt', context: context);
+
+  @override
+  Future<void> deletePostIt(String token, String title, String description,
+      int authorId, int postId) {
+    return _$deletePostItAsyncAction.run(
+        () => super.deletePostIt(token, title, description, authorId, postId));
   }
 
   @override

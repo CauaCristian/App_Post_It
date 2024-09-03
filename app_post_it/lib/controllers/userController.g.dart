@@ -24,13 +24,36 @@ mixin _$Controller on UserController, Store {
     });
   }
 
-  late final _$LoginUserAsyncAction =
-      AsyncAction('UserController.LoginUser', context: context);
+  late final _$loginUserAsyncAction =
+      AsyncAction('UserController.loginUser', context: context);
 
   @override
-  Future LoginUser(String username, String password) {
-    return _$LoginUserAsyncAction
-        .run(() => super.LoginUser(username, password));
+  Future<void> loginUser(String username, String password) {
+    return _$loginUserAsyncAction
+        .run(() => super.loginUser(username, password));
+  }
+
+  late final _$registerUserAsyncAction =
+      AsyncAction('UserController.registerUser', context: context);
+
+  @override
+  Future<void> registerUser(String username, String password) {
+    return _$registerUserAsyncAction
+        .run(() => super.registerUser(username, password));
+  }
+
+  late final _$UserControllerActionController =
+      ActionController(name: 'UserController', context: context);
+
+  @override
+  void logoutUser() {
+    final _$actionInfo = _$UserControllerActionController.startAction(
+        name: 'UserController.logoutUser');
+    try {
+      return super.logoutUser();
+    } finally {
+      _$UserControllerActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
