@@ -1,3 +1,4 @@
+import 'package:app_post_it/repositories/apiRepository.dart';
 import 'package:flutter/material.dart';
 
 class PerfilPage extends StatelessWidget {
@@ -9,7 +10,10 @@ class PerfilPage extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {}, icon: Icon(Icons.arrow_back_ios_rounded)),
+            onPressed: () {
+              Apirepository().createUser();
+            },
+            icon: Icon(Icons.arrow_back_ios_rounded)),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
