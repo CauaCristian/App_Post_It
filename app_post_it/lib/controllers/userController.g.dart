@@ -39,28 +39,6 @@ mixin _$Controller on UserController, Store {
   }
 
   @override
-  void updateUsername(String newUsername) {
-    final _$actionInfo = _$UserControllerActionController.startAction(
-        name: 'UserController.updateUsername');
-    try {
-      return super.updateUsername(newUsername);
-    } finally {
-      _$UserControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void updatePassword(String newPassword) {
-    final _$actionInfo = _$UserControllerActionController.startAction(
-        name: 'UserController.updatePassword');
-    try {
-      return super.updatePassword(newPassword);
-    } finally {
-      _$UserControllerActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 user: ${user}

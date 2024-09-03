@@ -12,26 +12,4 @@ abstract class UserController with Store {
   void setUser(int id, String username, String password) {
     user = User(id: id, username: username, password: password);
   }
-
-  @action
-  void updateUsername(String newUsername) {
-    if (user != null) {
-      user = User(
-        id: user!.id,
-        username: newUsername,
-        password: user!.password,
-      );
-    }
-  }
-
-  @action
-  void updatePassword(String newPassword) {
-    if (user != null) {
-      user = User(
-        id: user!.id,
-        username: user!.username,
-        password: newPassword,
-      );
-    }
-  }
 }
