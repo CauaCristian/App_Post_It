@@ -3,13 +3,13 @@ import 'dart:convert';
 class PostItModel {
   int id;
   String title;
-  String text;
+  String description;
   int author;
 
   PostItModel({
     required this.id,
     required this.title,
-    required this.text,
+    required this.description,
     required this.author,
   });
 
@@ -17,7 +17,7 @@ class PostItModel {
     return {
       'id': id,
       'title': title,
-      'text': text,
+      'description': description,
       'author': author,
     };
   }
@@ -26,7 +26,7 @@ class PostItModel {
     return PostItModel(
       id: map['id'] ?? 0,
       title: map['title'] ?? '',
-      text: map['text'] ?? '',
+      description: map['description'] ?? '',
       author: map['author'] ?? 0,
     );
   }
