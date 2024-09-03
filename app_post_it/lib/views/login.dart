@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         title: Image.asset(
           "assets/logo.png",
-          width: 60,
+          width: 55,
         ),
         elevation: 0,
         backgroundColor: Colors.transparent,

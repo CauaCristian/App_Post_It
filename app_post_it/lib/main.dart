@@ -1,4 +1,6 @@
+import 'package:app_post_it/views/home.dart';
 import 'package:app_post_it/views/login.dart';
+import 'package:app_post_it/views/perfil.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -29,6 +31,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return LoginPage();
+    return PerfilPage();
   }
 }
