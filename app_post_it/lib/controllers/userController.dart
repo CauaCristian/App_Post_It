@@ -11,7 +11,7 @@ abstract class UserController with Store {
   UserModel? user;
 
   @action
-  void LoginUser(String username, String password) async {
+  Future LoginUser(String username, String password) async {
     user = await apiService.loginUser(username, password);
   }
 }
