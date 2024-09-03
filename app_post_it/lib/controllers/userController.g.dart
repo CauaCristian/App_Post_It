@@ -12,30 +12,25 @@ mixin _$Controller on UserController, Store {
   late final _$userAtom = Atom(name: 'UserController.user', context: context);
 
   @override
-  User? get user {
+  UserModel? get user {
     _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(User? value) {
+  set user(UserModel? value) {
     _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
     });
   }
 
-  late final _$UserControllerActionController =
-      ActionController(name: 'UserController', context: context);
+  late final _$LoginUserAsyncAction =
+      AsyncAction('UserController.LoginUser', context: context);
 
   @override
-  void setUser(int id, String username, String password) {
-    final _$actionInfo = _$UserControllerActionController.startAction(
-        name: 'UserController.setUser');
-    try {
-      return super.setUser(id, username, password);
-    } finally {
-      _$UserControllerActionController.endAction(_$actionInfo);
-    }
+  Future LoginUser(String username, String password) {
+    return _$LoginUserAsyncAction
+        .run(() => super.LoginUser(username, password));
   }
 
   @override

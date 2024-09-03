@@ -10,10 +10,7 @@ class PerfilPage extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Apirepository().createUser();
-            },
-            icon: Icon(Icons.arrow_back_ios_rounded)),
+            onPressed: () {}, icon: Icon(Icons.arrow_back_ios_rounded)),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),

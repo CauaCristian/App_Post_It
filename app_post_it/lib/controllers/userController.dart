@@ -1,15 +1,17 @@
-import 'package:app_post_it/models/user.dart';
+import 'package:app_post_it/models/userModel.dart';
+import 'package:app_post_it/services/apiService.dart';
 import 'package:mobx/mobx.dart';
 part 'userController.g.dart';
 
 class Controller = UserController with _$Controller;
 
 abstract class UserController with Store {
+  ApiService apiService = ApiService();
   @observable
-  User? user;
+  UserModel? user;
 
   @action
-  void setUser(int id, String username, String password) {
-    user = User(id: id, username: username, password: password);
+  void LoginUser(String username, String password) async {
+    user = await apiService.loginUser(username, password);
   }
 }

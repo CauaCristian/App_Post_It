@@ -13,16 +13,24 @@ mixin _$Controller on PostItController, Store {
       Atom(name: 'PostItController.posts', context: context);
 
   @override
-  List<PostIt> get posts {
+  List<PostItModel> get posts {
     _$postsAtom.reportRead();
     return super.posts;
   }
 
   @override
-  set posts(List<PostIt> value) {
+  set posts(List<PostItModel> value) {
     _$postsAtom.reportWrite(value, super.posts, () {
       super.posts = value;
     });
+  }
+
+  late final _$getPostsAsyncAction =
+      AsyncAction('PostItController.getPosts', context: context);
+
+  @override
+  Future getPosts(int authorId) {
+    return _$getPostsAsyncAction.run(() => super.getPosts(authorId));
   }
 
   late final _$PostItControllerActionController =
