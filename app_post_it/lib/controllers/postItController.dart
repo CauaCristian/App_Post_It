@@ -2,7 +2,7 @@ import 'package:app_post_it/models/postItModel.dart';
 import 'package:app_post_it/services/apiService.dart';
 import 'package:mobx/mobx.dart';
 
-part 'postItController.g.dart';
+part 'store/postItController.g.dart';
 
 class Controller = PostItController with _$Controller;
 
