@@ -8,9 +8,9 @@ part of '../postItController.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$PostItController on _PostItControllerBase, Store {
+mixin _$PostItController on _PostItController, Store {
   late final _$postsAtom =
-      Atom(name: '_PostItControllerBase.posts', context: context);
+      Atom(name: '_PostItController.posts', context: context);
 
   @override
   List<PostItModel> get posts {
@@ -26,7 +26,7 @@ mixin _$PostItController on _PostItControllerBase, Store {
   }
 
   late final _$addPostItAsyncAction =
-      AsyncAction('_PostItControllerBase.addPostIt', context: context);
+      AsyncAction('_PostItController.addPostIt', context: context);
 
   @override
   Future<void> addPostIt(
@@ -36,7 +36,7 @@ mixin _$PostItController on _PostItControllerBase, Store {
   }
 
   late final _$getPostsAsyncAction =
-      AsyncAction('_PostItControllerBase.getPosts', context: context);
+      AsyncAction('_PostItController.getPosts', context: context);
 
   @override
   Future<void> getPosts(int authorId, String token) {
@@ -44,7 +44,7 @@ mixin _$PostItController on _PostItControllerBase, Store {
   }
 
   late final _$updatePostItAsyncAction =
-      AsyncAction('_PostItControllerBase.updatePostIt', context: context);
+      AsyncAction('_PostItController.updatePostIt', context: context);
 
   @override
   Future<void> updatePostIt(String token, String title, String description,
@@ -54,7 +54,7 @@ mixin _$PostItController on _PostItControllerBase, Store {
   }
 
   late final _$deletePostItAsyncAction =
-      AsyncAction('_PostItControllerBase.deletePostIt', context: context);
+      AsyncAction('_PostItController.deletePostIt', context: context);
 
   @override
   Future<void> deletePostIt(String token, String title, String description,

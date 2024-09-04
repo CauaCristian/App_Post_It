@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -33,6 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
   UserController userController = UserController();
   @override
   Widget build(BuildContext context) {
-    return userController.user == null ? LoginPage() : HomePage();
+    return userController.user == null
+        ? LoginPage()
+        : HomePage(
+            user: userController.user!,
+          );
   }
 }

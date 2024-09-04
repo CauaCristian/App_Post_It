@@ -3,9 +3,9 @@ import 'package:mobx/mobx.dart';
 
 part 'store/tokenController.g.dart';
 
-class TokenController = _TokenControllerBase with _$TokenController;
+class TokenController = _TokenController with _$TokenController;
 
-abstract class _TokenControllerBase with Store {
+abstract class _TokenController with Store {
   final TokenService _tokenService = TokenService();
 
   @observable

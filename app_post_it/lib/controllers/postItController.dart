@@ -4,10 +4,10 @@ import 'package:mobx/mobx.dart';
 
 part 'store/postItController.g.dart';
 
-class PostItController = _PostItControllerBase with _$PostItController;
+class PostItController = _PostItController with _$PostItController;
 
-abstract class _PostItControllerBase with Store {
-  ApiService _apiService = ApiService();
+abstract class _PostItController with Store {
+  final ApiService _apiService = ApiService();
 
   @observable
   List<PostItModel> posts = [];
@@ -17,7 +17,7 @@ abstract class _PostItControllerBase with Store {
       String title, String description, String token, int authorId) async {
     final newPostIt =
         await _apiService.createPostIt(title, description, token, authorId);
-    posts = List.from(posts)..add(newPostIt);
+    posts = await _apiService.getPostsByAuthor(authorId, token);
   }
 
   @action
@@ -28,16 +28,14 @@ abstract class _PostItControllerBase with Store {
   @action
   Future<void> updatePostIt(String token, String title, String description,
       int authorId, int postId) async {
-    final updatedPostIt = await _apiService.updatePostIt(
-        token, title, description, authorId, postId);
-    posts =
-        posts.map((post) => post.id == postId ? updatedPostIt : post).toList();
+    await _apiService.updatePostIt(token, title, description, authorId, postId);
+    posts = await _apiService.getPostsByAuthor(authorId, token);
   }
 
   @action
   Future<void> deletePostIt(String token, String title, String description,
       int authorId, int postId) async {
     await _apiService.deletePostIt(token, title, description, authorId, postId);
-    posts = posts.where((post) => post.id != postId).toList();
+    posts = await _apiService.getPostsByAuthor(authorId, token);
   }
 }

@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class Apirepository {
   final String _baseUrl = 'https://api-post-it.onrender.com';
-  TokenService _tokenService = TokenService();
+  final TokenService _tokenService = TokenService();
 
   Future<UserModel> register(String username, String password) async {
     final response = await http.post(

@@ -4,10 +4,10 @@ import 'package:mobx/mobx.dart';
 
 part 'store/userController.g.dart';
 
-class UserController = _UserControllerBase with _$UserController;
+class UserController = _UserController with _$UserController;
 
-abstract class _UserControllerBase with Store {
-  ApiService _apiService = ApiService();
+abstract class _UserController with Store {
+  final ApiService _apiService = ApiService();
 
   @observable
   UserModel? user;

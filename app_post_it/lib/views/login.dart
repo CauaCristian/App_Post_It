@@ -1,21 +1,17 @@
-import 'package:app_post_it/controllers/postItController.dart';
-import 'package:app_post_it/controllers/tokenController.dart';
 import 'package:app_post_it/controllers/userController.dart';
-import 'package:app_post_it/services/apiService.dart';
 import 'package:app_post_it/views/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  LoginPage({super.key});
+  final userController = UserController();
 
   @override
   Widget build(BuildContext context) {
     TextEditingController usernameController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
-    UserController userController = UserController();
-    PostItController postItController = PostItController();
-    TokenController tokenController = TokenController();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -23,7 +19,6 @@ class LoginPage extends StatelessWidget {
           "assets/logo.png",
           width: 55,
         ),
-        elevation: 0,
         backgroundColor: Colors.transparent,
       ),
       body: Container(
@@ -95,14 +90,11 @@ class LoginPage extends StatelessWidget {
                   await userController.loginUser(
                       usernameController.text, passwordController.text);
                   if (userController.user != null) {
-                    tokenController.loadToken();
-                    await postItController.getPosts(
-                      userController.user!.id,
-                      tokenController.token!,
-                    );
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return HomePage();
+                        .pushReplacement(MaterialPageRoute(builder: (context) {
+                      return HomePage(
+                        user: userController.user!,
+                      );
                     }));
                   }
                 },
@@ -126,14 +118,11 @@ class LoginPage extends StatelessWidget {
                   await userController.registerUser(
                       usernameController.text, passwordController.text);
                   if (userController.user != null) {
-                    tokenController.loadToken();
-                    await postItController.getPosts(
-                      userController.user!.id,
-                      tokenController.token!,
-                    );
                     Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) {
-                      return HomePage();
+                        .pushReplacement(MaterialPageRoute(builder: (context) {
+                      return HomePage(
+                        user: userController.user!,
+                      );
                     }));
                   }
                 },

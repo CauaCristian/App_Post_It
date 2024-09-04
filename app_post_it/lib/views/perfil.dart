@@ -1,7 +1,11 @@
+import 'package:app_post_it/models/postItModel.dart';
+import 'package:app_post_it/models/userModel.dart';
 import 'package:flutter/material.dart';
 
 class PerfilPage extends StatelessWidget {
-  const PerfilPage({super.key});
+  UserModel user;
+  List<PostItModel> posts;
+  PerfilPage({required this.user, required this.posts});
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +13,7 @@ class PerfilPage extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {}, icon: Icon(Icons.arrow_back_ios_rounded)),
+            onPressed: () {}, icon: const Icon(Icons.arrow_back_ios_rounded)),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
@@ -37,26 +41,43 @@ class PerfilPage extends StatelessWidget {
               height: 15,
             ),
             Text(
-              "@teste",
-              style: TextStyle(color: Colors.white, fontSize: 25),
+              "@${user.username}",
+              style: const TextStyle(color: Colors.white, fontSize: 25),
             ),
             const SizedBox(
               height: 20,
             ),
-            Container(
+            SizedBox(
               height: 400,
               child: ListView.builder(
-                itemCount: 20,
+                itemCount: posts.length,
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(
-                      'User $index',
-                      style: TextStyle(color: Colors.white),
+                  return GestureDetector(
+                    child: Container(
+                      padding: EdgeInsets.all(30),
+                      margin: EdgeInsets.all(10),
+                      width: 10,
+                      height: 200,
+                      decoration: BoxDecoration(
+                          color: Colors.deepPurple[50],
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "${posts[index].title}",
+                            style: const TextStyle(
+                                fontSize: 40, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "${posts[index]..description}",
+                            style: const TextStyle(
+                              fontSize: 20,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    leading: Icon(Icons.person, color: Colors.white),
-                    trailing:
-                        Icon(Icons.arrow_forward_ios, color: Colors.white),
-                    onTap: () {},
                   );
                 },
               ),
