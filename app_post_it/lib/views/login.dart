@@ -3,9 +3,20 @@ import 'package:app_post_it/views/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final userController = UserController();
+  @override
+  void initState() {
+    userController.logoutUser();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,8 +98,10 @@ class LoginPage extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
                 onPressed: () async {
+                  print("Login");
                   await userController.loginUser(
                       usernameController.text, passwordController.text);
+                  print("logado");
                   if (userController.user != null) {
                     Navigator.of(context)
                         .pushReplacement(MaterialPageRoute(builder: (context) {

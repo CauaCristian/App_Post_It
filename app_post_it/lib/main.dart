@@ -1,7 +1,5 @@
 import 'package:app_post_it/controllers/userController.dart';
-import 'package:app_post_it/views/home.dart';
 import 'package:app_post_it/views/login.dart';
-import 'package:app_post_it/views/perfil.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,10 +32,6 @@ class _MyHomePageState extends State<MyHomePage> {
   UserController userController = UserController();
   @override
   Widget build(BuildContext context) {
-    return userController.user == null
-        ? LoginPage()
-        : HomePage(
-            user: userController.user!,
-          );
+    return LoginPage();
   }
 }

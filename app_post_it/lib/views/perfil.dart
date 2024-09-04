@@ -1,5 +1,6 @@
 import 'package:app_post_it/models/postItModel.dart';
 import 'package:app_post_it/models/userModel.dart';
+import 'package:app_post_it/views/login.dart';
 import 'package:flutter/material.dart';
 
 class PerfilPage extends StatelessWidget {
@@ -19,6 +20,16 @@ class PerfilPage extends StatelessWidget {
             icon: const Icon(Icons.arrow_back_ios_rounded)),
         elevation: 0,
         backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacement(MaterialPageRoute(builder: (context) {
+                  return LoginPage();
+                }));
+              },
+              icon: Icon(Icons.person_off_outlined)),
+        ],
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -51,7 +62,7 @@ class PerfilPage extends StatelessWidget {
               height: 20,
             ),
             SizedBox(
-              height: 400,
+              height: 250,
               child: ListView.builder(
                 itemCount: posts.length,
                 itemBuilder: (context, index) {

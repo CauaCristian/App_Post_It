@@ -52,12 +52,14 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    await postItController.addPostIt(
-                        titleController.text,
-                        descriptionController.text,
-                        tokenController.token!,
-                        widget.user.id);
-                    Navigator.pop(context);
+                    if (tokenController.token != null) {
+                      await postItController.addPostIt(
+                          titleController.text,
+                          descriptionController.text,
+                          tokenController.token!,
+                          widget.user.id);
+                      Navigator.pop(context);
+                    }
                   },
                   child: Text('adicionar'),
                 ),
@@ -99,13 +101,15 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    await postItController.updatePostIt(
-                        tokenController.token!,
-                        titleController.text,
-                        descriptionController.text,
-                        widget.user.id,
-                        postId);
-                    Navigator.pop(context);
+                    if (tokenController.token != null) {
+                      await postItController.updatePostIt(
+                          tokenController.token!,
+                          titleController.text,
+                          descriptionController.text,
+                          widget.user.id,
+                          postId);
+                      Navigator.pop(context);
+                    }
                   },
                   child: Text('editar'),
                 ),
@@ -133,7 +137,9 @@ class _HomePageState extends State<HomePage> {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
                   return PerfilPage(
-                      user: widget.user, posts: postItController.posts);
+                    user: widget.user,
+                    posts: postItController.posts,
+                  );
                 }));
               },
               icon: Icon(Icons.person_2_outlined))
@@ -244,12 +250,14 @@ class _HomePageState extends State<HomePage> {
                                       icon: Icon(Icons.edit)),
                                   IconButton(
                                       onPressed: () {
-                                        postItController.deletePostIt(
-                                            tokenController.token!,
-                                            post.title,
-                                            post.description,
-                                            post.author,
-                                            post.id);
+                                        if (tokenController.token != null) {
+                                          postItController.deletePostIt(
+                                              tokenController.token!,
+                                              post.title,
+                                              post.description,
+                                              post.author,
+                                              post.id);
+                                        }
                                       },
                                       icon: Icon(Icons.delete)),
                                 ],
