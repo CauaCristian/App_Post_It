@@ -26,10 +26,4 @@ class UserModel {
       password: map['password'] ?? '',
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory UserModel.fromJson(String source) {
-    return UserModel.fromMap(json.decode(source));
-  }
 }

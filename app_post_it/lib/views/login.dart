@@ -1,4 +1,8 @@
-import 'package:app_post_it/repositories/apiRepository.dart';
+import 'package:app_post_it/controllers/postItController.dart';
+import 'package:app_post_it/controllers/tokenController.dart';
+import 'package:app_post_it/controllers/userController.dart';
+import 'package:app_post_it/services/apiService.dart';
+import 'package:app_post_it/views/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +11,11 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController usernameController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
+    UserController userController = UserController();
+    PostItController postItController = PostItController();
+    TokenController tokenController = TokenController();
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -39,27 +48,31 @@ class LoginPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            const CupertinoTextField(
+            CupertinoTextField(
+              controller: usernameController,
               cursorColor: Colors.pinkAccent,
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               placeholder: "Digite o seu nome de usuario",
-              placeholderStyle: TextStyle(color: Colors.white70, fontSize: 14),
-              style: TextStyle(color: Colors.white, fontSize: 14),
-              decoration: BoxDecoration(
+              placeholderStyle:
+                  const TextStyle(color: Colors.white70, fontSize: 14),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+              decoration: const BoxDecoration(
                   color: Colors.black12,
                   borderRadius: BorderRadius.all(
                     Radius.circular(7),
                   )),
             ),
             const SizedBox(height: 5),
-            const CupertinoTextField(
-              padding: EdgeInsets.all(15),
+            CupertinoTextField(
+              controller: passwordController,
+              padding: const EdgeInsets.all(15),
               cursorColor: Colors.pinkAccent,
               placeholder: "Digite sua senha",
               obscureText: true,
-              placeholderStyle: TextStyle(color: Colors.white70, fontSize: 14),
-              style: TextStyle(color: Colors.white, fontSize: 14),
-              decoration: BoxDecoration(
+              placeholderStyle:
+                  const TextStyle(color: Colors.white70, fontSize: 14),
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+              decoration: const BoxDecoration(
                   color: Colors.black12,
                   borderRadius: BorderRadius.all(
                     Radius.circular(7),
@@ -78,7 +91,21 @@ class LoginPage extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w600),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await userController.loginUser(
+                      usernameController.text, passwordController.text);
+                  if (userController.user != null) {
+                    tokenController.loadToken();
+                    await postItController.getPosts(
+                      userController.user!.id,
+                      tokenController.token!,
+                    );
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return HomePage();
+                    }));
+                  }
+                },
               ),
             ),
             const SizedBox(height: 7),
@@ -95,7 +122,21 @@ class LoginPage extends StatelessWidget {
                       fontSize: 14,
                       fontWeight: FontWeight.w600),
                 ),
-                onPressed: () {},
+                onPressed: () async {
+                  await userController.registerUser(
+                      usernameController.text, passwordController.text);
+                  if (userController.user != null) {
+                    tokenController.loadToken();
+                    await postItController.getPosts(
+                      userController.user!.id,
+                      tokenController.token!,
+                    );
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(builder: (context) {
+                      return HomePage();
+                    }));
+                  }
+                },
               ),
             ),
           ],

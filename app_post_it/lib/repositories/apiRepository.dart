@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'package:app_post_it/models/postItModel.dart';
 import 'package:app_post_it/models/userModel.dart';
+import 'package:app_post_it/services/tokenService.dart';
 import 'package:http/http.dart' as http;
 
 class Apirepository {
-  final String baseUrl = 'https://api-post-it-1.onrender.com';
+  final String _baseUrl = 'https://api-post-it.onrender.com';
+  TokenService _tokenService = TokenService();
 
   Future<UserModel> register(String username, String password) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/auth/register'),
+      Uri.parse('$_baseUrl/auth/register'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -24,7 +26,9 @@ class Apirepository {
 
       final userJson = json.decode(response.body)['user'];
       final token = json.decode(response.body)['token'];
-      final user = UserModel.fromJson(userJson);
+
+      await _tokenService.saveToken(token);
+      final user = UserModel.fromMap(userJson);
       return user;
     } else {
       print('Erro ao enviar post. Código de status: ${response.statusCode}');
@@ -35,7 +39,7 @@ class Apirepository {
 
   Future<UserModel> login(String username, String password) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/auth/login'),
+      Uri.parse('$_baseUrl/auth/login'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -50,8 +54,9 @@ class Apirepository {
       print('Corpo da resposta: ${response.body}');
 
       final userJson = json.decode(response.body)['user'];
-      final user = UserModel.fromJson(userJson);
+      final user = UserModel.fromMap(userJson);
       final token = json.decode(response.body)['token'];
+      await _tokenService.saveToken(token);
 
       return user;
     } else {
@@ -61,18 +66,19 @@ class Apirepository {
     }
   }
 
-  Future<List<PostItModel>> findByAuthorld(int id) async {
+  Future<List<PostItModel>> findByAuthorld(int id, String token) async {
     final response = await http.get(
-      Uri.parse('$baseUrl/postIt/findByAuthorId/$id'),
+      Uri.parse('$_baseUrl/postIt/findByAuthorId/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'bearer $token'
       },
     );
     if (response.statusCode == 200) {
       print('Deu certo MLKAO');
-      print('$response estou printando a response');
+      print('${response.body} estou printando a response');
       final List<dynamic> postsJson = json.decode(response.body);
-      return postsJson.map((json) => PostItModel.fromJson(json)).toList();
+      return postsJson.map((json) => PostItModel.fromMap(json)).toList();
     }
     return [];
   }
@@ -86,12 +92,12 @@ class Apirepository {
     };
 
     final response = await http.post(
-      Uri.parse('$baseUrl/postIt/create'),
+      Uri.parse('$_baseUrl/postIt/create'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'bearer $token', // 'Bearer' em maiúsculo
+        'Authorization': 'bearer $token',
       },
-      body: jsonEncode(postData), // Convertendo o mapa para JSON
+      body: jsonEncode(postData),
     );
 
     if (response.statusCode == 200) {
@@ -99,7 +105,7 @@ class Apirepository {
       print('Corpo da resposta: ${response.body}');
 
       final postJson = json.decode(response.body);
-      return PostItModel.fromJson(postJson);
+      return PostItModel.fromMap(postJson);
     } else {
       print('Erro ao criar o postIt. Código de status: ${response.statusCode}');
       print('Corpo da resposta: ${response.body}');
@@ -115,16 +121,16 @@ class Apirepository {
       'description': description,
       'author': author,
     };
-    var response = await http.put(Uri.parse("$baseUrl/postIt/update"),
+    var response = await http.put(Uri.parse("$_baseUrl/postIt/update"),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
-          'Authorization': 'bearer $token', // 'Bearer' em maiúsculo
+          'Authorization': 'bearer $token',
         },
         body: jsonEncode(postData));
     if (response.statusCode == 200) {
       print('deu certo: ${response.body}');
       final postJson = json.decode(response.body);
-      return PostItModel.fromJson(postJson);
+      return PostItModel.fromMap(postJson);
     } else {
       print('deu errado: ${response.body}');
       throw Exception('Erro ao atualizar post-It');
@@ -134,10 +140,10 @@ class Apirepository {
   Future<void> deletePostIt(String token, String title, String description,
       int author, int id) async {
     final response = await http.delete(
-      Uri.parse("$baseUrl/postIt/delete"),
+      Uri.parse("$_baseUrl/postIt/delete"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'bearer $token', // 'Bearer' em maiúsculo
+        'Authorization': 'bearer $token',
       },
       body: jsonEncode({
         'id': id,

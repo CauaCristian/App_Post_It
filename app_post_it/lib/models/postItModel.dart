@@ -30,9 +30,4 @@ class PostItModel {
       author: map['author'] ?? 0,
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory PostItModel.fromJson(String source) =>
-      PostItModel.fromMap(json.decode(source));
 }

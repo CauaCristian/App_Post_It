@@ -4,34 +4,24 @@ import 'package:mobx/mobx.dart';
 
 part 'store/userController.g.dart';
 
-class Controller = UserController with _$Controller;
+class UserController = _UserControllerBase with _$UserController;
 
-abstract class UserController with Store {
-  ApiService apiService = ApiService();
+abstract class _UserControllerBase with Store {
+  ApiService _apiService = ApiService();
 
   @observable
   UserModel? user;
 
   @action
   Future<void> loginUser(String username, String password) async {
-    try {
-      user = await apiService.loginUser(username, password);
-      print('Usuário logado com sucesso: ${user?.username}');
-    } catch (e) {
-      print('Erro ao fazer login: $e');
-      rethrow;
-    }
+    user = await _apiService.loginUser(username, password);
+    print('Usuário logado com sucesso: ${user?.username}');
   }
 
   @action
   Future<void> registerUser(String username, String password) async {
-    try {
-      user = await apiService.registerUser(username, password);
-      print('Usuário registrado com sucesso: ${user?.username}');
-    } catch (e) {
-      print('Erro ao registrar usuário: $e');
-      rethrow;
-    }
+    user = await _apiService.registerUser(username, password);
+    print('Usuário registrado com sucesso: ${user?.username}');
   }
 
   @action

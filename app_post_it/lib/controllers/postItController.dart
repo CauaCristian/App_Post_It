@@ -4,10 +4,10 @@ import 'package:mobx/mobx.dart';
 
 part 'store/postItController.g.dart';
 
-class Controller = PostItController with _$Controller;
+class PostItController = _PostItControllerBase with _$PostItController;
 
-abstract class PostItController with Store {
-  ApiService apiService = ApiService();
+abstract class _PostItControllerBase with Store {
+  ApiService _apiService = ApiService();
 
   @observable
   List<PostItModel> posts = [];
@@ -15,51 +15,29 @@ abstract class PostItController with Store {
   @action
   Future<void> addPostIt(
       String title, String description, String token, int authorId) async {
-    try {
-      final newPostIt =
-          await apiService.createPostIt(title, description, token, authorId);
-      posts = List.from(posts)..add(newPostIt);
-    } catch (e) {
-      print('Erro ao adicionar post-it: $e');
-      rethrow;
-    }
+    final newPostIt =
+        await _apiService.createPostIt(title, description, token, authorId);
+    posts = List.from(posts)..add(newPostIt);
   }
 
   @action
-  Future<void> getPosts(int authorId) async {
-    try {
-      posts = await apiService.getPostsByAuthor(authorId);
-    } catch (e) {
-      print('Erro ao buscar posts: $e');
-      rethrow;
-    }
+  Future<void> getPosts(int authorId, String token) async {
+    posts = await _apiService.getPostsByAuthor(authorId, token);
   }
 
   @action
   Future<void> updatePostIt(String token, String title, String description,
       int authorId, int postId) async {
-    try {
-      final updatedPostIt = await apiService.updatePostIt(
-          token, title, description, authorId, postId);
-      posts = posts
-          .map((post) => post.id == postId ? updatedPostIt : post)
-          .toList();
-    } catch (e) {
-      print('Erro ao atualizar post-it: $e');
-      rethrow;
-    }
+    final updatedPostIt = await _apiService.updatePostIt(
+        token, title, description, authorId, postId);
+    posts =
+        posts.map((post) => post.id == postId ? updatedPostIt : post).toList();
   }
 
   @action
   Future<void> deletePostIt(String token, String title, String description,
       int authorId, int postId) async {
-    try {
-      await apiService.deletePostIt(
-          token, title, description, authorId, postId);
-      posts = posts.where((post) => post.id != postId).toList();
-    } catch (e) {
-      print('Erro ao deletar post-it: $e');
-      rethrow;
-    }
+    await _apiService.deletePostIt(token, title, description, authorId, postId);
+    posts = posts.where((post) => post.id != postId).toList();
   }
 }

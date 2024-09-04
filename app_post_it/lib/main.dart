@@ -1,3 +1,4 @@
+import 'package:app_post_it/controllers/userController.dart';
 import 'package:app_post_it/views/home.dart';
 import 'package:app_post_it/views/login.dart';
 import 'package:app_post_it/views/perfil.dart';
@@ -29,8 +30,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  UserController userController = UserController();
   @override
   Widget build(BuildContext context) {
-    return PerfilPage();
+    return userController.user == null ? LoginPage() : HomePage();
   }
 }

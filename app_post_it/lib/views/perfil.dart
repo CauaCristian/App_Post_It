@@ -1,4 +1,3 @@
-import 'package:app_post_it/repositories/apiRepository.dart';
 import 'package:flutter/material.dart';
 
 class PerfilPage extends StatelessWidget {

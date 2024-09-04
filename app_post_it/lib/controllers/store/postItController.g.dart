@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'postItController.dart';
+part of '../postItController.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,9 +8,9 @@ part of 'postItController.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$Controller on PostItController, Store {
+mixin _$PostItController on _PostItControllerBase, Store {
   late final _$postsAtom =
-      Atom(name: 'PostItController.posts', context: context);
+      Atom(name: '_PostItControllerBase.posts', context: context);
 
   @override
   List<PostItModel> get posts {
@@ -26,7 +26,7 @@ mixin _$Controller on PostItController, Store {
   }
 
   late final _$addPostItAsyncAction =
-      AsyncAction('PostItController.addPostIt', context: context);
+      AsyncAction('_PostItControllerBase.addPostIt', context: context);
 
   @override
   Future<void> addPostIt(
@@ -36,15 +36,15 @@ mixin _$Controller on PostItController, Store {
   }
 
   late final _$getPostsAsyncAction =
-      AsyncAction('PostItController.getPosts', context: context);
+      AsyncAction('_PostItControllerBase.getPosts', context: context);
 
   @override
-  Future<void> getPosts(int authorId) {
-    return _$getPostsAsyncAction.run(() => super.getPosts(authorId));
+  Future<void> getPosts(int authorId, String token) {
+    return _$getPostsAsyncAction.run(() => super.getPosts(authorId, token));
   }
 
   late final _$updatePostItAsyncAction =
-      AsyncAction('PostItController.updatePostIt', context: context);
+      AsyncAction('_PostItControllerBase.updatePostIt', context: context);
 
   @override
   Future<void> updatePostIt(String token, String title, String description,
@@ -54,7 +54,7 @@ mixin _$Controller on PostItController, Store {
   }
 
   late final _$deletePostItAsyncAction =
-      AsyncAction('PostItController.deletePostIt', context: context);
+      AsyncAction('_PostItControllerBase.deletePostIt', context: context);
 
   @override
   Future<void> deletePostIt(String token, String title, String description,
