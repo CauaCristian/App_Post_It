@@ -13,7 +13,10 @@ class PerfilPage extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {}, icon: const Icon(Icons.arrow_back_ios_rounded)),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios_rounded)),
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
@@ -70,7 +73,7 @@ class PerfilPage extends StatelessWidget {
                                 fontSize: 40, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "${posts[index]..description}",
+                            "${posts[index].description}",
                             style: const TextStyle(
                               fontSize: 20,
                             ),
